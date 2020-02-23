@@ -1,0 +1,100 @@
+[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"components": [
+					{
+						"name": "a",
+						"type": "bytes"
+					},
+					{
+						"name": "b",
+						"type": "bytes"
+					}
+				],
+				"name": "d",
+				"type": "tuple"
+			}
+		],
+		"name": "compare",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "a",
+				"type": "bytes"
+			},
+			{
+				"name": "b",
+				"type": "bytes"
+			}
+		],
+		"name": "compareOri",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"components": [
+					{
+						"name": "a",
+						"type": "bytes"
+					},
+					{
+						"name": "b",
+						"type": "bytes"
+					}
+				],
+				"name": "d",
+				"type": "tuple"
+			}
+		],
+		"name": "store",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "a",
+				"type": "bytes"
+			},
+			{
+				"name": "b",
+				"type": "bytes"
+			}
+		],
+		"name": "storeOri",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "reIsFit",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
