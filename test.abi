@@ -3,39 +3,21 @@
 		"constant": false,
 		"inputs": [
 			{
-				"name": "a",
-				"type": "bytes"
-			},
-			{
-				"name": "b",
-				"type": "bytes"
-			}
-		],
-		"name": "compareOri",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
 				"components": [
 					{
-						"name": "a",
+						"name": "x",
 						"type": "bytes"
 					},
 					{
-						"name": "b",
+						"name": "y",
 						"type": "bytes"
 					}
 				],
-				"name": "d",
+				"name": "ct",
 				"type": "tuple"
 			}
 		],
-		"name": "compare",
+		"name": "search",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
@@ -45,12 +27,34 @@
 		"constant": false,
 		"inputs": [
 			{
-				"name": "a",
+				"name": "x",
 				"type": "bytes"
 			},
 			{
-				"name": "b",
+				"name": "y",
 				"type": "bytes"
+			}
+		],
+		"name": "searchOri",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "x",
+				"type": "bytes"
+			},
+			{
+				"name": "y",
+				"type": "bytes"
+			},
+			{
+				"name": "id",
+				"type": "uint256"
 			}
 		],
 		"name": "storeOri",
@@ -62,11 +66,25 @@
 	{
 		"constant": true,
 		"inputs": [],
-		"name": "reIsFit",
+		"name": "getIsPair",
 		"outputs": [
 			{
 				"name": "",
-				"type": "bool"
+				"type": "bytes"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getResult",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256[]"
 			}
 		],
 		"payable": false,
@@ -75,20 +93,33 @@
 	},
 	{
 		"constant": false,
+		"inputs": [],
+		"name": "clearRes",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
 		"inputs": [
 			{
 				"components": [
 					{
-						"name": "a",
+						"name": "x",
 						"type": "bytes"
 					},
 					{
-						"name": "b",
+						"name": "y",
 						"type": "bytes"
 					}
 				],
-				"name": "d",
+				"name": "ct",
 				"type": "tuple"
+			},
+			{
+				"name": "id",
+				"type": "uint256"
 			}
 		],
 		"name": "store",

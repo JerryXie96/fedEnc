@@ -1,13 +1,19 @@
 package main
 
 import (
+	"context"
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"log"
 	"math/big"
 
 	"github.com/clearmatics/bn256"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/ethclient"
 )
 
 // the key set of CA
@@ -18,9 +24,10 @@ type KeySetOfCA struct {
 
 // the key set of server
 type KeySetOfServer struct {
-	Kb   *big.Int
-	beta *big.Int
-	S    *big.Int
+	Kb      *big.Int
+	beta    *big.Int
+	S       *big.Int
+	g1Sbeta *bn256.G1
 }
 
 // the key set of user
@@ -50,6 +57,9 @@ func keyGeneration() {
 	serverKeySet.beta, _ = rand.Int(rand.Reader, bn256.Order) // beta: the encryption key for server in on-chain encryption
 
 	serverKeySet.S, _ = rand.Int(rand.Reader, bn256.Order) // S: the encryption key for server in on-chain encryption
+
+	serverKeySet.g1Sbeta = new(bn256.G1).ScalarBaseMult(serverKeySet.S)
+	serverKeySet.g1Sbeta.ScalarMult(serverKeySet.g1Sbeta, serverKeySet.beta) //g1^{S*beta}: the encryption key for server in on-chain encryption
 }
 
 // userEncryption(w string) (*bn256.G2 C1, *bn256.G2 C2): Input a keyword(string w) and return a ciphertext tuple (C1, C2)
@@ -82,10 +92,117 @@ func preServerEnc(c1 *bn256.G2, c2 *bn256.G2) *bn256.G2 {
 	return CT
 }
 
+// getOnChainCipher(CT *bn256.G2) (*bn256.G1, *bn256.G2): Generate the ciphertext on-chain from CT
+func getOnChainCipher(CT *bn256.G2) (*bn256.G1, *bn256.G2) {
+	hashedCT := sha256.Sum256(CT.Marshal())                 // hash CT
+	bigIntCT := new(big.Int).SetBytes(hashedCT[:])          // transform CT in bytes to CT in big.Int
+	rb, _ := rand.Int(rand.Reader, bn256.Order)             // r_b: the nonce of this encryption procedure for server
+	X := new(bn256.G1).ScalarMult(serverKeySet.g1Sbeta, rb) // X=g1^{S*beta*rb}
+	Y := new(bn256.G2).ScalarBaseMult(serverKeySet.beta)    // Y=g2&{beta}
+	Y.ScalarMult(Y, bigIntCT)                               // Y=g2^{beta*H(CT)}
+	Y.ScalarMult(Y, rb)                                     // Y=g2^{beta*H(CT)*rb}
+	return X, Y
+}
+
+// enc(instance *EMABI, auth *bind.TransactOpts, w string, id uint): Encrypt the keyword and upload the encrypted keyword and id to blockchain
+func enc(instance *EMABI, auth *bind.TransactOpts, conn *ethclient.Client, w string, id uint) {
+	c1, c2 := userEncryption(w)
+	CT := preServerEnc(c1, c2)
+	//fmt.Println(hex.EncodeToString(CT.Marshal()))
+	X, Y := getOnChainCipher(CT)
+	X.Neg(X)
+	var indexItem Struct0
+	indexItem.X = X.Marshal()
+	indexItem.Y = Y.Marshal()
+	fmt.Println(hex.EncodeToString(X.Marshal()))
+	fmt.Println()
+	fmt.Println(hex.EncodeToString(Y.Marshal()))
+	fmt.Println()
+	bIId := new(big.Int).SetUint64(uint64(id)) // the big.Int form of id
+	auth.Nonce = nil
+
+	tx, err := instance.Store(auth, indexItem, bIId)
+	if err != nil {
+		fmt.Println(err)
+	}
+	ctx := context.Background()
+	receipt, err := bind.WaitMined(ctx, conn, tx)
+	fmt.Println(receipt.Status)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+// search(instance *EMABI, auth *bind.TransactOpts, w string) []*big.Int: Search from the index on-chain with keyword w
+func search(instance *EMABI, auth *bind.TransactOpts, conn *ethclient.Client, w string) []*big.Int {
+	c1, c2 := userEncryption(w)
+	CT := preServerEnc(c1, c2)
+	X, Y := getOnChainCipher(CT)
+	fmt.Println(hex.EncodeToString(CT.Marshal()))
+	var indexItem Struct0
+	indexItem.X = X.Marshal()
+	indexItem.Y = Y.Marshal()
+	fmt.Println(hex.EncodeToString(X.Marshal()))
+	fmt.Println()
+	fmt.Println(hex.EncodeToString(Y.Marshal()))
+	fmt.Println()
+	tx, err := instance.Search(auth, indexItem)
+	if err != nil {
+		fmt.Println(err)
+	}
+	ctx := context.Background()
+	receipt, err := bind.WaitMined(ctx, conn, tx)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(tx.Hash().Hex())
+	fmt.Println(receipt.Status)
+	res, _ := instance.GetResult(nil)
+	return res
+}
+
+// clearResult(instance *EMABI, auth *bind.TransactOpts): Clear last-retrieval's result
+func clearResult(instance *EMABI, auth *bind.TransactOpts, conn *ethclient.Client) {
+	tx, _ := instance.ClearRes(auth)
+	ctx := context.Background()
+	_, err := bind.WaitMined(ctx, conn, tx)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
 // main(): the main entrance
 func main() {
+	var url, scAddress, privateKeyStr string
+	url = "http://localhost:8545"
+	scAddress = "0xe2B3a9F80979eD11D5546F8AA1bf6878d5583d82"
+	privateKeyStr = "fad9c8855b740a0b7ed4c221dbad0f33a83a49cad6b3fe8d5817ac83d38b6a19"
+
+	client, err := ethclient.Dial(url)
+	fmt.Println("CONNECTED")
+	tokenAddress := common.HexToAddress(scAddress)
+	instance, err := NewEMABI(tokenAddress, client)
+	fmt.Println("Instance Generated")
+	privateKey, err := crypto.HexToECDSA(privateKeyStr)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Privatekey Settled")
+	auth := bind.NewKeyedTransactor(privateKey)
+	auth.Nonce = nil
+	auth.Value = big.NewInt(0)      // in wei
+	auth.GasLimit = uint64(3000000) // in units
+	auth.GasPrice = big.NewInt(0)
+
 	keyGeneration()
-	c1, c2 := userEncryption("hello")
-	fmt.Println(hex.EncodeToString(c1.Marshal()))
-	fmt.Println(hex.EncodeToString(c2.Marshal()))
+	fmt.Println("Key Generated")
+	enc(instance, auth, client, "hello", 1)
+	enc(instance, auth, client, "hello", 2)
+	fmt.Println("Encryption Completed")
+	res := search(instance, auth, client, "hello")
+	fmt.Println(res)
+	for i := 0; i < len(res); i++ {
+		fmt.Println(res[i].String())
+	}
+	//clearResult(instance, auth, client)
 }

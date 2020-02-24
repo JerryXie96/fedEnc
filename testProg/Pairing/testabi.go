@@ -34,7 +34,7 @@ type Struct0 struct {
 }
 
 // TestABIABI is the input ABI used to generate the binding from.
-const TestABIABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"a\",\"type\":\"bytes\"},{\"name\":\"b\",\"type\":\"bytes\"}],\"name\":\"compare\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"a\",\"type\":\"bytes\"},{\"name\":\"b\",\"type\":\"bytes\"}],\"name\":\"store\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"components\":[{\"name\":\"a\",\"type\":\"bytes\"},{\"name\":\"b\",\"type\":\"bytes\"}],\"name\":\"d\",\"type\":\"tuple\"}],\"name\":\"storeTest\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"reIsFit\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
+const TestABIABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"a\",\"type\":\"bytes\"},{\"name\":\"b\",\"type\":\"bytes\"}],\"name\":\"compareOri\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"components\":[{\"name\":\"a\",\"type\":\"bytes\"},{\"name\":\"b\",\"type\":\"bytes\"}],\"name\":\"d\",\"type\":\"tuple\"}],\"name\":\"compare\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"a\",\"type\":\"bytes\"},{\"name\":\"b\",\"type\":\"bytes\"}],\"name\":\"storeOri\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"reIsFit\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"components\":[{\"name\":\"a\",\"type\":\"bytes\"},{\"name\":\"b\",\"type\":\"bytes\"}],\"name\":\"d\",\"type\":\"tuple\"}],\"name\":\"store\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
 
 // TestABI is an auto generated Go binding around an Ethereum contract.
 type TestABI struct {
@@ -204,65 +204,86 @@ func (_TestABI *TestABICallerSession) ReIsFit() (bool, error) {
 	return _TestABI.Contract.ReIsFit(&_TestABI.CallOpts)
 }
 
-// Compare is a paid mutator transaction binding the contract method 0x81e79ac6.
+// Compare is a paid mutator transaction binding the contract method 0x43337bd8.
 //
-// Solidity: function compare(bytes a, bytes b) returns()
-func (_TestABI *TestABITransactor) Compare(opts *bind.TransactOpts, a []byte, b []byte) (*types.Transaction, error) {
-	return _TestABI.contract.Transact(opts, "compare", a, b)
+// Solidity: function compare(Struct0 d) returns()
+func (_TestABI *TestABITransactor) Compare(opts *bind.TransactOpts, d Struct0) (*types.Transaction, error) {
+	return _TestABI.contract.Transact(opts, "compare", d)
 }
 
-// Compare is a paid mutator transaction binding the contract method 0x81e79ac6.
+// Compare is a paid mutator transaction binding the contract method 0x43337bd8.
 //
-// Solidity: function compare(bytes a, bytes b) returns()
-func (_TestABI *TestABISession) Compare(a []byte, b []byte) (*types.Transaction, error) {
-	return _TestABI.Contract.Compare(&_TestABI.TransactOpts, a, b)
+// Solidity: function compare(Struct0 d) returns()
+func (_TestABI *TestABISession) Compare(d Struct0) (*types.Transaction, error) {
+	return _TestABI.Contract.Compare(&_TestABI.TransactOpts, d)
 }
 
-// Compare is a paid mutator transaction binding the contract method 0x81e79ac6.
+// Compare is a paid mutator transaction binding the contract method 0x43337bd8.
 //
-// Solidity: function compare(bytes a, bytes b) returns()
-func (_TestABI *TestABITransactorSession) Compare(a []byte, b []byte) (*types.Transaction, error) {
-	return _TestABI.Contract.Compare(&_TestABI.TransactOpts, a, b)
+// Solidity: function compare(Struct0 d) returns()
+func (_TestABI *TestABITransactorSession) Compare(d Struct0) (*types.Transaction, error) {
+	return _TestABI.Contract.Compare(&_TestABI.TransactOpts, d)
 }
 
-// Store is a paid mutator transaction binding the contract method 0x71ce190f.
+// CompareOri is a paid mutator transaction binding the contract method 0x17305b69.
 //
-// Solidity: function store(bytes a, bytes b) returns()
-func (_TestABI *TestABITransactor) Store(opts *bind.TransactOpts, a []byte, b []byte) (*types.Transaction, error) {
-	return _TestABI.contract.Transact(opts, "store", a, b)
+// Solidity: function compareOri(bytes a, bytes b) returns()
+func (_TestABI *TestABITransactor) CompareOri(opts *bind.TransactOpts, a []byte, b []byte) (*types.Transaction, error) {
+	return _TestABI.contract.Transact(opts, "compareOri", a, b)
 }
 
-// Store is a paid mutator transaction binding the contract method 0x71ce190f.
+// CompareOri is a paid mutator transaction binding the contract method 0x17305b69.
 //
-// Solidity: function store(bytes a, bytes b) returns()
-func (_TestABI *TestABISession) Store(a []byte, b []byte) (*types.Transaction, error) {
-	return _TestABI.Contract.Store(&_TestABI.TransactOpts, a, b)
+// Solidity: function compareOri(bytes a, bytes b) returns()
+func (_TestABI *TestABISession) CompareOri(a []byte, b []byte) (*types.Transaction, error) {
+	return _TestABI.Contract.CompareOri(&_TestABI.TransactOpts, a, b)
 }
 
-// Store is a paid mutator transaction binding the contract method 0x71ce190f.
+// CompareOri is a paid mutator transaction binding the contract method 0x17305b69.
 //
-// Solidity: function store(bytes a, bytes b) returns()
-func (_TestABI *TestABITransactorSession) Store(a []byte, b []byte) (*types.Transaction, error) {
-	return _TestABI.Contract.Store(&_TestABI.TransactOpts, a, b)
+// Solidity: function compareOri(bytes a, bytes b) returns()
+func (_TestABI *TestABITransactorSession) CompareOri(a []byte, b []byte) (*types.Transaction, error) {
+	return _TestABI.Contract.CompareOri(&_TestABI.TransactOpts, a, b)
 }
 
-// StoreTest is a paid mutator transaction binding the contract method 0xdf0359f1.
+// Store is a paid mutator transaction binding the contract method 0xf87027c8.
 //
-// Solidity: function storeTest(Struct0 d) returns()
-func (_TestABI *TestABITransactor) StoreTest(opts *bind.TransactOpts, d Struct0) (*types.Transaction, error) {
-	return _TestABI.contract.Transact(opts, "storeTest", d)
+// Solidity: function store(Struct0 d) returns()
+func (_TestABI *TestABITransactor) Store(opts *bind.TransactOpts, d Struct0) (*types.Transaction, error) {
+	return _TestABI.contract.Transact(opts, "store", d)
 }
 
-// StoreTest is a paid mutator transaction binding the contract method 0xdf0359f1.
+// Store is a paid mutator transaction binding the contract method 0xf87027c8.
 //
-// Solidity: function storeTest(Struct0 d) returns()
-func (_TestABI *TestABISession) StoreTest(d Struct0) (*types.Transaction, error) {
-	return _TestABI.Contract.StoreTest(&_TestABI.TransactOpts, d)
+// Solidity: function store(Struct0 d) returns()
+func (_TestABI *TestABISession) Store(d Struct0) (*types.Transaction, error) {
+	return _TestABI.Contract.Store(&_TestABI.TransactOpts, d)
 }
 
-// StoreTest is a paid mutator transaction binding the contract method 0xdf0359f1.
+// Store is a paid mutator transaction binding the contract method 0xf87027c8.
 //
-// Solidity: function storeTest(Struct0 d) returns()
-func (_TestABI *TestABITransactorSession) StoreTest(d Struct0) (*types.Transaction, error) {
-	return _TestABI.Contract.StoreTest(&_TestABI.TransactOpts, d)
+// Solidity: function store(Struct0 d) returns()
+func (_TestABI *TestABITransactorSession) Store(d Struct0) (*types.Transaction, error) {
+	return _TestABI.Contract.Store(&_TestABI.TransactOpts, d)
+}
+
+// StoreOri is a paid mutator transaction binding the contract method 0x87ff29f4.
+//
+// Solidity: function storeOri(bytes a, bytes b) returns()
+func (_TestABI *TestABITransactor) StoreOri(opts *bind.TransactOpts, a []byte, b []byte) (*types.Transaction, error) {
+	return _TestABI.contract.Transact(opts, "storeOri", a, b)
+}
+
+// StoreOri is a paid mutator transaction binding the contract method 0x87ff29f4.
+//
+// Solidity: function storeOri(bytes a, bytes b) returns()
+func (_TestABI *TestABISession) StoreOri(a []byte, b []byte) (*types.Transaction, error) {
+	return _TestABI.Contract.StoreOri(&_TestABI.TransactOpts, a, b)
+}
+
+// StoreOri is a paid mutator transaction binding the contract method 0x87ff29f4.
+//
+// Solidity: function storeOri(bytes a, bytes b) returns()
+func (_TestABI *TestABITransactorSession) StoreOri(a []byte, b []byte) (*types.Transaction, error) {
+	return _TestABI.Contract.StoreOri(&_TestABI.TransactOpts, a, b)
 }
