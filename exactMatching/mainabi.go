@@ -34,7 +34,7 @@ type Struct0 struct {
 }
 
 // EMABIABI is the input ABI used to generate the binding from.
-const EMABIABI = "[{\"constant\":false,\"inputs\":[{\"components\":[{\"name\":\"x\",\"type\":\"bytes\"},{\"name\":\"y\",\"type\":\"bytes\"}],\"name\":\"ct\",\"type\":\"tuple\"}],\"name\":\"search\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getIsPair\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getResult\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"clearRes\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"components\":[{\"name\":\"x\",\"type\":\"bytes\"},{\"name\":\"y\",\"type\":\"bytes\"}],\"name\":\"ct\",\"type\":\"tuple\"},{\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"store\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
+const EMABIABI = "[{\"constant\":false,\"inputs\":[{\"components\":[{\"name\":\"x\",\"type\":\"bytes\"},{\"name\":\"y\",\"type\":\"bytes\"}],\"name\":\"ct\",\"type\":\"tuple\"}],\"name\":\"search\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getResult\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"clearRes\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"components\":[{\"name\":\"x\",\"type\":\"bytes\"},{\"name\":\"y\",\"type\":\"bytes\"}],\"name\":\"ct\",\"type\":\"tuple\"},{\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"store\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
 
 // EMABI is an auto generated Go binding around an Ethereum contract.
 type EMABI struct {
@@ -178,32 +178,6 @@ func (_EMABI *EMABITransactorRaw) Transact(opts *bind.TransactOpts, method strin
 	return _EMABI.Contract.contract.Transact(opts, method, params...)
 }
 
-// GetIsPair is a free data retrieval call binding the contract method 0x85c8656b.
-//
-// Solidity: function getIsPair() constant returns(bool)
-func (_EMABI *EMABICaller) GetIsPair(opts *bind.CallOpts) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _EMABI.contract.Call(opts, out, "getIsPair")
-	return *ret0, err
-}
-
-// GetIsPair is a free data retrieval call binding the contract method 0x85c8656b.
-//
-// Solidity: function getIsPair() constant returns(bool)
-func (_EMABI *EMABISession) GetIsPair() (bool, error) {
-	return _EMABI.Contract.GetIsPair(&_EMABI.CallOpts)
-}
-
-// GetIsPair is a free data retrieval call binding the contract method 0x85c8656b.
-//
-// Solidity: function getIsPair() constant returns(bool)
-func (_EMABI *EMABICallerSession) GetIsPair() (bool, error) {
-	return _EMABI.Contract.GetIsPair(&_EMABI.CallOpts)
-}
-
 // GetResult is a free data retrieval call binding the contract method 0xde292789.
 //
 // Solidity: function getResult() constant returns(uint256[])
@@ -253,21 +227,21 @@ func (_EMABI *EMABITransactorSession) ClearRes() (*types.Transaction, error) {
 
 // Search is a paid mutator transaction binding the contract method 0x32fcc7d0.
 //
-// Solidity: function search(Struct0 ct) returns()
+// Solidity: function search(Struct0 ct) returns(uint256[])
 func (_EMABI *EMABITransactor) Search(opts *bind.TransactOpts, ct Struct0) (*types.Transaction, error) {
 	return _EMABI.contract.Transact(opts, "search", ct)
 }
 
 // Search is a paid mutator transaction binding the contract method 0x32fcc7d0.
 //
-// Solidity: function search(Struct0 ct) returns()
+// Solidity: function search(Struct0 ct) returns(uint256[])
 func (_EMABI *EMABISession) Search(ct Struct0) (*types.Transaction, error) {
 	return _EMABI.Contract.Search(&_EMABI.TransactOpts, ct)
 }
 
 // Search is a paid mutator transaction binding the contract method 0x32fcc7d0.
 //
-// Solidity: function search(Struct0 ct) returns()
+// Solidity: function search(Struct0 ct) returns(uint256[])
 func (_EMABI *EMABITransactorSession) Search(ct Struct0) (*types.Transaction, error) {
 	return _EMABI.Contract.Search(&_EMABI.TransactOpts, ct)
 }

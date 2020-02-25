@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/rand"
 	"crypto/sha256"
-	"encoding/hex"
 	"fmt"
 	"log"
 	"math/big"
@@ -108,26 +107,25 @@ func getOnChainCipher(CT *bn256.G2) (*bn256.G1, *bn256.G2) {
 func enc(instance *EMABI, auth *bind.TransactOpts, conn *ethclient.Client, w string, id uint) {
 	c1, c2 := userEncryption(w)
 	CT := preServerEnc(c1, c2)
-	//fmt.Println(hex.EncodeToString(CT.Marshal()))
+	// fmt.Println("CT: ", hex.EncodeToString(CT.Marshal()))
 	X, Y := getOnChainCipher(CT)
 	X.Neg(X)
 	var indexItem Struct0
 	indexItem.X = X.Marshal()
 	indexItem.Y = Y.Marshal()
-	fmt.Println(hex.EncodeToString(X.Marshal()))
-	fmt.Println()
-	fmt.Println(hex.EncodeToString(Y.Marshal()))
-	fmt.Println()
+	// fmt.Println(hex.EncodeToString(X.Marshal()))
+	// fmt.Println()
+	// fmt.Println(hex.EncodeToString(Y.Marshal()))
+	// fmt.Println()
 	bIId := new(big.Int).SetUint64(uint64(id)) // the big.Int form of id
 	auth.Nonce = nil
-
 	tx, err := instance.Store(auth, indexItem, bIId)
 	if err != nil {
 		fmt.Println(err)
 	}
 	ctx := context.Background()
-	receipt, err := bind.WaitMined(ctx, conn, tx)
-	fmt.Println(receipt.Status)
+	_, err = bind.WaitMined(ctx, conn, tx)
+	// fmt.Println("status: ", receipt.Status)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -138,25 +136,25 @@ func search(instance *EMABI, auth *bind.TransactOpts, conn *ethclient.Client, w 
 	c1, c2 := userEncryption(w)
 	CT := preServerEnc(c1, c2)
 	X, Y := getOnChainCipher(CT)
-	fmt.Println(hex.EncodeToString(CT.Marshal()))
+	// fmt.Println("CT: ", hex.EncodeToString(CT.Marshal()))
 	var indexItem Struct0
 	indexItem.X = X.Marshal()
 	indexItem.Y = Y.Marshal()
-	fmt.Println(hex.EncodeToString(X.Marshal()))
-	fmt.Println()
-	fmt.Println(hex.EncodeToString(Y.Marshal()))
-	fmt.Println()
+	// fmt.Println(hex.EncodeToString(X.Marshal()))
+	// fmt.Println()
+	// fmt.Println(hex.EncodeToString(Y.Marshal()))
+	// fmt.Println()
 	tx, err := instance.Search(auth, indexItem)
 	if err != nil {
 		fmt.Println(err)
 	}
 	ctx := context.Background()
-	receipt, err := bind.WaitMined(ctx, conn, tx)
+	_, err = bind.WaitMined(ctx, conn, tx)
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(tx.Hash().Hex())
-	fmt.Println(receipt.Status)
+	// fmt.Println(tx.Hash().Hex())
+	// fmt.Println("Status:", receipt.Status)
 	res, _ := instance.GetResult(nil)
 	return res
 }
@@ -175,7 +173,7 @@ func clearResult(instance *EMABI, auth *bind.TransactOpts, conn *ethclient.Clien
 func main() {
 	var url, scAddress, privateKeyStr string
 	url = "http://localhost:8545"
-	scAddress = "0xe2B3a9F80979eD11D5546F8AA1bf6878d5583d82"
+	scAddress = "0xFE809aA009dD2f332838eC8799379D3B860fEA04"
 	privateKeyStr = "fad9c8855b740a0b7ed4c221dbad0f33a83a49cad6b3fe8d5817ac83d38b6a19"
 
 	client, err := ethclient.Dial(url)
@@ -200,9 +198,9 @@ func main() {
 	enc(instance, auth, client, "hello", 2)
 	fmt.Println("Encryption Completed")
 	res := search(instance, auth, client, "hello")
-	fmt.Println(res)
+	// fmt.Println(res)
 	for i := 0; i < len(res); i++ {
 		fmt.Println(res[i].String())
 	}
-	//clearResult(instance, auth, client)
+	clearResult(instance, auth, client)
 }

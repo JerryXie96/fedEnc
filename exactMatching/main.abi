@@ -18,23 +18,14 @@
 			}
 		],
 		"name": "search",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getIsPair",
 		"outputs": [
 			{
 				"name": "",
-				"type": "bool"
+				"type": "uint256[]"
 			}
 		],
 		"payable": false,
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
