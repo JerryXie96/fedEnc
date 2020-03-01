@@ -1,0 +1,83 @@
+[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"components": [
+					{
+						"name": "x",
+						"type": "bytes"
+					},
+					{
+						"name": "y",
+						"type": "bytes"
+					}
+				],
+				"name": "ct",
+				"type": "tuple"
+			}
+		],
+		"name": "search",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"components": [
+					{
+						"components": [
+							{
+								"name": "x",
+								"type": "bytes"
+							},
+							{
+								"name": "y",
+								"type": "bytes"
+							}
+						],
+						"name": "CT",
+						"type": "tuple"
+					},
+					{
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "cipher",
+				"type": "tuple[]"
+			}
+		],
+		"name": "store",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getResult",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "clearRes",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]

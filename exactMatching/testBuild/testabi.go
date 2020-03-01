@@ -27,6 +27,12 @@ var (
 	_ = event.NewSubscription
 )
 
+// Struct1 is an auto generated low-level Go binding around an user-defined struct.
+type Struct1 struct {
+	CT Struct0
+	Id *big.Int
+}
+
 // Struct0 is an auto generated low-level Go binding around an user-defined struct.
 type Struct0 struct {
 	X []byte
@@ -34,7 +40,7 @@ type Struct0 struct {
 }
 
 // TestABIABI is the input ABI used to generate the binding from.
-const TestABIABI = "[{\"constant\":false,\"inputs\":[{\"components\":[{\"name\":\"x\",\"type\":\"bytes\"},{\"name\":\"y\",\"type\":\"bytes\"}],\"name\":\"ct\",\"type\":\"tuple\"}],\"name\":\"search\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"x\",\"type\":\"bytes\"},{\"name\":\"y\",\"type\":\"bytes\"}],\"name\":\"searchOri\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"x\",\"type\":\"bytes\"},{\"name\":\"y\",\"type\":\"bytes\"},{\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"storeOri\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getIsPair\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getResult\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"clearRes\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"components\":[{\"name\":\"x\",\"type\":\"bytes\"},{\"name\":\"y\",\"type\":\"bytes\"}],\"name\":\"ct\",\"type\":\"tuple\"},{\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"store\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
+const TestABIABI = "[{\"constant\":false,\"inputs\":[{\"components\":[{\"name\":\"x\",\"type\":\"bytes\"},{\"name\":\"y\",\"type\":\"bytes\"}],\"name\":\"ct\",\"type\":\"tuple\"}],\"name\":\"search\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"components\":[{\"components\":[{\"name\":\"x\",\"type\":\"bytes\"},{\"name\":\"y\",\"type\":\"bytes\"}],\"name\":\"CT\",\"type\":\"tuple\"},{\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"cipher\",\"type\":\"tuple[]\"}],\"name\":\"store\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getResult\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"clearRes\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
 
 // TestABI is an auto generated Go binding around an Ethereum contract.
 type TestABI struct {
@@ -178,32 +184,6 @@ func (_TestABI *TestABITransactorRaw) Transact(opts *bind.TransactOpts, method s
 	return _TestABI.Contract.contract.Transact(opts, method, params...)
 }
 
-// GetIsPair is a free data retrieval call binding the contract method 0x85c8656b.
-//
-// Solidity: function getIsPair() constant returns(bytes)
-func (_TestABI *TestABICaller) GetIsPair(opts *bind.CallOpts) ([]byte, error) {
-	var (
-		ret0 = new([]byte)
-	)
-	out := ret0
-	err := _TestABI.contract.Call(opts, out, "getIsPair")
-	return *ret0, err
-}
-
-// GetIsPair is a free data retrieval call binding the contract method 0x85c8656b.
-//
-// Solidity: function getIsPair() constant returns(bytes)
-func (_TestABI *TestABISession) GetIsPair() ([]byte, error) {
-	return _TestABI.Contract.GetIsPair(&_TestABI.CallOpts)
-}
-
-// GetIsPair is a free data retrieval call binding the contract method 0x85c8656b.
-//
-// Solidity: function getIsPair() constant returns(bytes)
-func (_TestABI *TestABICallerSession) GetIsPair() ([]byte, error) {
-	return _TestABI.Contract.GetIsPair(&_TestABI.CallOpts)
-}
-
 // GetResult is a free data retrieval call binding the contract method 0xde292789.
 //
 // Solidity: function getResult() constant returns(uint256[])
@@ -272,65 +252,23 @@ func (_TestABI *TestABITransactorSession) Search(ct Struct0) (*types.Transaction
 	return _TestABI.Contract.Search(&_TestABI.TransactOpts, ct)
 }
 
-// SearchOri is a paid mutator transaction binding the contract method 0x33c888e1.
+// Store is a paid mutator transaction binding the contract method 0x80f39585.
 //
-// Solidity: function searchOri(bytes x, bytes y) returns()
-func (_TestABI *TestABITransactor) SearchOri(opts *bind.TransactOpts, x []byte, y []byte) (*types.Transaction, error) {
-	return _TestABI.contract.Transact(opts, "searchOri", x, y)
+// Solidity: function store([]Struct1 cipher) returns()
+func (_TestABI *TestABITransactor) Store(opts *bind.TransactOpts, cipher []Struct1) (*types.Transaction, error) {
+	return _TestABI.contract.Transact(opts, "store", cipher)
 }
 
-// SearchOri is a paid mutator transaction binding the contract method 0x33c888e1.
+// Store is a paid mutator transaction binding the contract method 0x80f39585.
 //
-// Solidity: function searchOri(bytes x, bytes y) returns()
-func (_TestABI *TestABISession) SearchOri(x []byte, y []byte) (*types.Transaction, error) {
-	return _TestABI.Contract.SearchOri(&_TestABI.TransactOpts, x, y)
+// Solidity: function store([]Struct1 cipher) returns()
+func (_TestABI *TestABISession) Store(cipher []Struct1) (*types.Transaction, error) {
+	return _TestABI.Contract.Store(&_TestABI.TransactOpts, cipher)
 }
 
-// SearchOri is a paid mutator transaction binding the contract method 0x33c888e1.
+// Store is a paid mutator transaction binding the contract method 0x80f39585.
 //
-// Solidity: function searchOri(bytes x, bytes y) returns()
-func (_TestABI *TestABITransactorSession) SearchOri(x []byte, y []byte) (*types.Transaction, error) {
-	return _TestABI.Contract.SearchOri(&_TestABI.TransactOpts, x, y)
-}
-
-// Store is a paid mutator transaction binding the contract method 0xf79a7e06.
-//
-// Solidity: function store(Struct0 ct, uint256 id) returns()
-func (_TestABI *TestABITransactor) Store(opts *bind.TransactOpts, ct Struct0, id *big.Int) (*types.Transaction, error) {
-	return _TestABI.contract.Transact(opts, "store", ct, id)
-}
-
-// Store is a paid mutator transaction binding the contract method 0xf79a7e06.
-//
-// Solidity: function store(Struct0 ct, uint256 id) returns()
-func (_TestABI *TestABISession) Store(ct Struct0, id *big.Int) (*types.Transaction, error) {
-	return _TestABI.Contract.Store(&_TestABI.TransactOpts, ct, id)
-}
-
-// Store is a paid mutator transaction binding the contract method 0xf79a7e06.
-//
-// Solidity: function store(Struct0 ct, uint256 id) returns()
-func (_TestABI *TestABITransactorSession) Store(ct Struct0, id *big.Int) (*types.Transaction, error) {
-	return _TestABI.Contract.Store(&_TestABI.TransactOpts, ct, id)
-}
-
-// StoreOri is a paid mutator transaction binding the contract method 0x536d6cd1.
-//
-// Solidity: function storeOri(bytes x, bytes y, uint256 id) returns()
-func (_TestABI *TestABITransactor) StoreOri(opts *bind.TransactOpts, x []byte, y []byte, id *big.Int) (*types.Transaction, error) {
-	return _TestABI.contract.Transact(opts, "storeOri", x, y, id)
-}
-
-// StoreOri is a paid mutator transaction binding the contract method 0x536d6cd1.
-//
-// Solidity: function storeOri(bytes x, bytes y, uint256 id) returns()
-func (_TestABI *TestABISession) StoreOri(x []byte, y []byte, id *big.Int) (*types.Transaction, error) {
-	return _TestABI.Contract.StoreOri(&_TestABI.TransactOpts, x, y, id)
-}
-
-// StoreOri is a paid mutator transaction binding the contract method 0x536d6cd1.
-//
-// Solidity: function storeOri(bytes x, bytes y, uint256 id) returns()
-func (_TestABI *TestABITransactorSession) StoreOri(x []byte, y []byte, id *big.Int) (*types.Transaction, error) {
-	return _TestABI.Contract.StoreOri(&_TestABI.TransactOpts, x, y, id)
+// Solidity: function store([]Struct1 cipher) returns()
+func (_TestABI *TestABITransactorSession) Store(cipher []Struct1) (*types.Transaction, error) {
+	return _TestABI.Contract.Store(&_TestABI.TransactOpts, cipher)
 }
