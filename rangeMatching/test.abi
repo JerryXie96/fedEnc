@@ -1,0 +1,79 @@
+[
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "clearResult",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"components": [
+					{
+						"name": "cipher",
+						"type": "bytes[2][32]"
+					},
+					{
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "indexItem",
+				"type": "tuple[]"
+			}
+		],
+		"name": "store",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"components": [
+					{
+						"components": [
+							{
+								"name": "c1",
+								"type": "bytes"
+							},
+							{
+								"name": "c2",
+								"type": "bytes"
+							}
+						],
+						"name": "cipher",
+						"type": "tuple[2][32]"
+					}
+				],
+				"name": "query",
+				"type": "tuple"
+			}
+		],
+		"name": "search",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getResult",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
