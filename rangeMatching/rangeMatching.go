@@ -172,6 +172,18 @@ func search(instance *TestABI, auth *bind.TransactOpts, conn *ethclient.Client, 
 	return res
 }
 
+func clear(instance *TestABI, auth *bind.TransactOpts, conn *ethclient.Client) {
+	tx, err := instance.ClearResult(auth)
+	if err != nil {
+		fmt.Println(err)
+	}
+	ctx := context.Background()
+	_, err = bind.WaitMined(ctx, conn, tx)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
 func main() {
 	// var t int32
 	// t = 200
@@ -212,4 +224,5 @@ func main() {
 	for i := 0; i < len(res); i++ {
 		fmt.Println(res[i].String())
 	}
+	instance.ClearResult(auth)
 }
