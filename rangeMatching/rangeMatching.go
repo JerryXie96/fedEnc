@@ -224,5 +224,5 @@ func main() {
 	for i := 0; i < len(res); i++ {
 		fmt.Println(res[i].String())
 	}
-	instance.ClearResult(auth)
+	clear(instance, auth, client)
 }
