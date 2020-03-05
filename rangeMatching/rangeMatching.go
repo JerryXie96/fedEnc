@@ -9,6 +9,7 @@ import (
 	"math"
 	"math/big"
 	"strconv"
+	"time"
 
 	"github.com/clearmatics/bn256"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
@@ -114,6 +115,7 @@ func getOnChainCipher(CT *bn256.G2) (*bn256.G1, *bn256.G2) {
 func enc(w int32, id int, index int) {
 	wStr := strconv.FormatInt(int64(w), 2) // convert w to binary string
 	wStr = fmt.Sprintf("%032s", wStr)      // padding to 32 bits
+	fmt.Println(wStr)
 	for i := 0; i < 32/digit; i++ {
 		res, _ := strconv.ParseInt(wStr[i*digit:i*digit+digit], 2, 0)
 		c1, c2 := userEncryption(res)
@@ -129,7 +131,7 @@ func enc(w int32, id int, index int) {
 
 func post(instance *TestABI, auth *bind.TransactOpts, conn *ethclient.Client) {
 	auth.Nonce = nil
-	for i := 0; i < len(cipher)/2; i++ {
+	for i := 0; i < len(cipher)/5; i++ {
 		tx, err := instance.Store(auth, cipher[i*2:i*2+2])
 		if err != nil {
 			fmt.Println(err)
@@ -147,13 +149,13 @@ func search(instance *TestABI, auth *bind.TransactOpts, conn *ethclient.Client, 
 	var query Struct2
 	wStr := strconv.FormatInt(int64(w), 2) // convert w to binary string
 	wStr = fmt.Sprintf("%032s", wStr)      // padding to 32 bits
+	fmt.Println(wStr)
 	for i := 0; i < 32/digit; i++ {
 		res, _ := strconv.ParseInt(wStr[i*digit:i*digit+digit], 2, 0)
 		for j := 0; j < int(math.Exp2(float64(digit))); j++ {
 			c1, c2 := userEncryption(res + int64(j)) // assume that the relation operator is greater, i.e. >w
 			CT := preServerEnc(c1, c2)
 			X, Y := getOnChainCipher(CT)
-			X.Neg(X)
 			query.Cipher[i][j].C1 = X.Marshal()
 			query.Cipher[i][j].C2 = Y.Marshal()
 		}
@@ -195,7 +197,7 @@ func main() {
 
 	var url, scAddress, privateKeyStr string
 	url = "http://localhost:8545"
-	scAddress = "0x56F946E3350E74DcF15cE2c5500921541dEC79B4"
+	scAddress = "0x1B535ed36f6f561B8cA850B965dE0cA45a2C02a5"
 	privateKeyStr = "fad9c8855b740a0b7ed4c221dbad0f33a83a49cad6b3fe8d5817ac83d38b6a19"
 
 	client, err := ethclient.Dial(url)
@@ -215,11 +217,14 @@ func main() {
 	auth.GasPrice = big.NewInt(0)
 	keyGeneration()
 	fmt.Println("Key Generated")
-	enc(5, 5, 0)
-	enc(8, 8, 1)
+	enc(20, 20, 0)
+	enc(100, 100, 1)
+
 	post(instance, auth, client)
 	fmt.Println("Encryption Completed")
-	res := search(instance, auth, client, 6)
+	t1 := time.Now()
+	res := search(instance, auth, client, 50)
+	fmt.Println(time.Since(t1).Milliseconds())
 	// fmt.Println(res)
 	for i := 0; i < len(res); i++ {
 		fmt.Println(res[i].String())
